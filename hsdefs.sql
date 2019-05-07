@@ -8,6 +8,9 @@ create table card (
 	primary key (card_id)
 );
 
+INSERT INTO card(card_id, card_name, mana_cost, rarity, description, card_type) VALUES (1, 'Abomination', 5, 'Rare', 'Deal 2 damage to ALL characters.', 'Neutral');
+
+
 create table card_weapon (
 	card_id int not null,
 	weapon_id int not null,
@@ -40,6 +43,7 @@ create table card_minion (
 	foreign key (card_id) references card(card_id),
 	foreign key (minion_id) references minion(minion_id)
 );
+INSERT INTO card_minion (card_id, minion_id) VALUES (1, 1);
 
 create table minion (
 	minion_id int not null,
@@ -47,6 +51,8 @@ create table minion (
 	hp int not null,
 	primary key (minion_id)
 );
+
+INSERT INTO minion (minion_id, ap, hp) VALUES (1, 4, 4);
 
 create table minion_mechanics (
 	minion_id int not null,
