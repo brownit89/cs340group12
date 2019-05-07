@@ -11,6 +11,10 @@ create table card (
 
 INSERT INTO card(card_id, card_name, mana_cost, rarity, description, card_type) VALUES (1, 'Abomination', 5, 'Rare', 'Deal 2 damage to ALL characters.', 'Neutral');
 
+INSERT INTO card(card_id, card_name, mana_cost, rarity, description, card_type) VALUES (2, 'Ancestral Spirit', 2, 'Rare', 'Give a minion "Deathrattle: Resummon this minion."', 'Shaman');
+
+INSERT INTO card(card_id, card_name, mana_cost, rarity, description, card_type) VALUES (3, 'DOOMHAMMER', 5, 'Epic', '', 'Shaman');
+
 DROP TABLE IF EXISTS card_weapon; 
 create table card_weapon (
 	card_id int not null,
@@ -21,6 +25,7 @@ create table card_weapon (
 	constraint fk_card_weapon_weapon foreign key (weapon_id) 
 	references weapon(weapon_id)
 );
+INSERT INTO card_weapon (card_id, weapon_id) VALUES (3, 1);
 
 DROP TABLE IF EXISTS weapon; 
 create table weapon (
@@ -29,6 +34,7 @@ create table weapon (
 	durability int not null,
 	primary key (weapon_id)
 );
+INSERT INTO weapon (weapon_id, ap, durability) VALUES (1, 2, 8);
 
 DROP TABLE IF EXISTS weapon_mechanics; 
 create table weapon_mechanics (
@@ -38,6 +44,8 @@ create table weapon_mechanics (
 	foreign key (weapon_id) references weapon(weapon_id),
 	foreign key (weapon_id) references mechanics(mech_id)
 );
+INSERT INTO weapon_mechanics (weapon_id, mech_id) VALUES (1, 3);
+INSERT INTO weapon_mechanics (weapon_id, mech_id) VALUES (1, 4);
 
 DROP TABLE IF EXISTS card_minion; 
 create table card_minion (
@@ -79,6 +87,8 @@ create table mechanics (
 );
 INSERT INTO mechanics (mech_id, name) VALUES (1, 'TAUNT');
 INSERT INTO mechanics (mech_id, name) VALUES (2, 'DEATHRATTLE');
+INSERT INTO mechanics (mech_id, name) VALUES (3, 'WINDFURY');
+INSERT INTO mechanics (mech_id, name) VALUES (4, 'OVERLOAD');
 
 DROP TABLE IF EXISTS card_spell; 
 create table card_spell (
@@ -88,10 +98,12 @@ create table card_spell (
 	foreign key (card_id) references card(card_id),
 	foreign key (spell_id) references spell(spell_id)
 );
+INSERT INTO card_spell (card_id, spell_id) VALUES (2, 1);
 
 DROP TABLE IF EXISTS spell; 
 create table spell (
 	spell_id int not null,
 	primary key (spell_id)
 );
+INSERT INTO spell (spell_id) VALUES (1);
 
