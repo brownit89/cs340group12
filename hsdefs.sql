@@ -1,9 +1,9 @@
 create table card (
 	card_id int not null,
-	mana_cost int not null,
 	card_name varchar(255) not null,
 	rarity varchar(255),
 	description varchar(255),
+	mana_cost int not null,
 	card_type varchar(255) not null,
 	primary key (card_id)
 );
