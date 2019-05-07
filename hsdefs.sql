@@ -33,6 +33,14 @@ create table weapon_mechanics (
 	foreign key (weapon_id) references mechanics(mech_id)
 );
 
+create table card_minion (
+	card_id int not null,
+	minion_id int not null,
+	primary key (card_id, minion_id),
+	foreign key (card_id) references card(card_id),
+	foreign key (minion_id) references minion(minion_id)
+);
+
 create table minion (
 	minion_id int not null,
 	ap int not null,
