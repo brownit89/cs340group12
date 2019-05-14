@@ -14,11 +14,11 @@ create table card (
 	primary key (card_id)
 );
 
-insert into card(card_id, card_name, mana_cost, rarity, description, card_type) values (1, 'Abomination', 5, 'Rare', 'Deal 2 damage to all characters.', 'Neutral');
+insert into card(card_name, mana_cost, rarity, description, card_type) values ('Abomination', 5, 'Rare', 'Deal 2 damage to all characters.', 'Neutral');
 
-insert into card(card_id, card_name, mana_cost, rarity, description, card_type) values (2, 'Ancestral spirit', 2, 'Rare', 'Give a minion "Deathrattle: resummon this minion."', 'Shaman');
+insert into card(card_name, mana_cost, rarity, description, card_type) values ('Ancestral spirit', 2, 'Rare', 'Give a minion "Deathrattle: resummon this minion."', 'Shaman');
 
-insert into card(card_id, card_name, mana_cost, rarity, description, card_type) values (3, 'Doomhammer', 5, 'Epic', '', 'Shaman');
+insert into card(card_name, mana_cost, rarity, description, card_type) values ('Doomhammer', 5, 'Epic', '', 'Shaman');
 
 drop table if exists card_weapon; 
 create table card_weapon (
@@ -39,7 +39,7 @@ create table weapon (
 	durability int not null,
 	primary key (weapon_id)
 );
-insert into weapon (weapon_id, ap, durability) values (1, 2, 8);
+insert into weapon (ap, durability) values (2, 8);
 
 drop table if exists weapon_mechanics; 
 create table weapon_mechanics (
@@ -70,7 +70,7 @@ create table minion (
 	primary key (minion_id)
 );
 
-insert into minion (minion_id, ap, hp) values (1, 4, 4);
+insert into minion (ap, hp) values (4, 4);
 
 drop table if exists minion_mechanics; 
 create table minion_mechanics (
@@ -90,10 +90,10 @@ create table mechanics (
 	name varchar(255),
 	primary key (mech_id)
 );
-insert into mechanics (mech_id, name) values (1, 'Taunt');
-insert into mechanics (mech_id, name) values (2, 'Deathrattle');
-insert into mechanics (mech_id, name) values (3, 'Windfury');
-insert into mechanics (mech_id, name) values (4, 'Overload');
+insert into mechanics (name) values ('Taunt');
+insert into mechanics (name) values ('Deathrattle');
+insert into mechanics (name) values ('Windfury');
+insert into mechanics (name) values ('Overload');
 
 drop table if exists card_spell; 
 create table card_spell (
@@ -103,13 +103,13 @@ create table card_spell (
 	foreign key (card_id) references card(card_id),
 	foreign key (spell_id) references spell(spell_id)
 );
-insert into card_spell (card_id, spell_id) values (2, 1);
+--insert into card_spell (card_id, spell_id) values (2, 1);
 
 drop table if exists spell; 
 create table spell (
 	spell_id int not null auto_increment,
 	primary key (spell_id)
 );
-insert into spell (spell_id) values (1);
+--insert into spell (spell_id) values (1);
 
 set foreign_key_checks = 1;
