@@ -1,3 +1,8 @@
+set foreign_key_checks = 0;
+
+
+
+
 DROP TABLE IF EXISTS card; 
 create table card (
 	card_id int not null,
@@ -107,3 +112,4 @@ create table spell (
 );
 INSERT INTO spell (spell_id) VALUES (1);
 
+set foreign_key_checks = 1;
