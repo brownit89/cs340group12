@@ -6,35 +6,36 @@ set foreign_key_checks = 0;
 drop table if exists card; 
 create table card (
 	card_id int not null auto_increment,
+	type_id int not null,
 	card_name varchar(255) not null,
 	rarity varchar(255),
 	description varchar(255),
 	mana_cost int not null,
-	card_type varchar(255) not null,
 	primary key (card_id)
 );
 
-insert into card(card_id, card_name, mana_cost, rarity, description, card_type) values (1, 'Abomination', 5, 'Rare', 'Deal 2 damage to all characters.', 'Neutral');
+insert into card(type_id, card_name, mana_cost, rarity, description) values (1, 'Abomination', 5, 'Rare', 'Deal 2 damage to all characters.');
 
-insert into card(card_id, card_name, mana_cost, rarity, description, card_type) values (2, 'Ancestral spirit', 2, 'Rare', 'Give a minion "Deathrattle: resummon this minion."', 'Shaman');
+insert into card(type_id, card_name, mana_cost, rarity, description) values (3, 'Ancestral spirit', 2, 'Rare', 'Give a minion "Deathrattle: resummon this minion."');
 
-insert into card(card_id, card_name, mana_cost, rarity, description, card_type) values (3, 'Doomhammer', 5, 'Epic', '', 'Shaman');
+insert into card(type_id, card_name, mana_cost, rarity, description) values (2, 'Doomhammer', 5, 'Epic', '');
 
 drop table if exists card_weapon; 
 create table card_weapon (
-	card_id int not null,
+	type_id int not null,
 	weapon_id int not null,
-	primary key (card_id, weapon_id),
-	constraint fk_card_weapon_card foreign key (card_id) 
-	references card(card_id),
+	primary key (type_id, weapon_id),
+	constraint fk_card_weapon_card foreign key (type_id) 
+	references card(type_id),
 	constraint fk_card_weapon_weapon foreign key (weapon_id) 
 	references weapon(weapon_id)
 );
-insert into card_weapon (card_id, weapon_id) values (3, 1);
+insert into card_weapon (type_id, weapon_id) values (2, 1);
 
 drop table if exists weapon; 
 create table weapon (
 	weapon_id int not null auto_increment,
+	mech_id not null,
 	ap int not null,
 	durability int not null,
 	primary key (weapon_id)
@@ -108,7 +109,9 @@ insert into card_spell (card_id, spell_id) values (2, 1);
 drop table if exists spell; 
 create table spell (
 	spell_id int not null auto_increment,
+	spell_type varchar(255) not null,
 	primary key (spell_id)
+	
 );
 insert into spell (spell_id) values (1);
 

@@ -1,0 +1,9 @@
+<html>
+{{#each foo}}
+{{this}}
+{{/each}}
+<h3>Add new cards:</h3>
+<form id="addcard" action="/cards" method="post">
+	Name: <input type="text" name="card_name"><br>
+	Rarity: <input type="text" name="rarity"><br>
+	
