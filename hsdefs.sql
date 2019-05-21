@@ -103,7 +103,7 @@ create table card_spell (
 	foreign key (card_id) references card(card_id),
 	foreign key (spell_id) references spell(spell_id)
 );
---insert into card_spell (card_id, spell_id) values (2, 1);
+insert into card_spell (card_id, spell_id) values (2, 1);
 
 drop table if exists spell; 
 create table spell (
@@ -112,6 +112,6 @@ create table spell (
 	primary key (spell_id)
 	
 );
---insert into spell (spell_id) values (1);
+insert into spell (spell_type) values ("Single Target");
 
 set foreign_key_checks = 1;
