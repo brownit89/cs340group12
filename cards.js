@@ -51,7 +51,7 @@ module.exports = function(){
 
 
 	function getCard(res, mysql, context, id, complete){
-		var sql = mysql.pool.query("select * from card where card_id = ?";
+		var sql = mysql.pool.query("select * from card where card_id = ?");
 		var inserts = [id];
 		mysql.pool.query(sql, inserts, function(error, results, fields){
 	if(error){
@@ -76,7 +76,6 @@ module.exports = function(){
 	});
 }
 
-
 	function getWeaponMechanics(res, mysql, context, complete){
 		mysql.pool.query("select * from card inner join card_weapon on card.card_id = card_weapon.card_id inner join weapon on card_weapon.weapon_id = weapon.weapon_id inner join weapon_mechanics on weapon.weapon_id = weapon_mechanics.weapon_id inner join mechanics on weapon_mechanics.mech_id = mechanics.mech_id;", function(error, results, fields){
 	if(error){
@@ -89,4 +88,36 @@ module.exports = function(){
 	});
 }
 
+router.get('/:id', function(req, res){
+	callbackCount = 0;
+	var context = {};
+	context.jsscripts = ["selectedcard.js", "updatecard.js"];
+	var mysql = req.app.get('mysql');
+	getCard(res, mysql, context, req.params.id, complete);
+	function complete(){
+		callbackCount++;
+		if(callbackCount >= 2){
+			res.render('update-card',context);
+		}
+	}
+});
+
+router.post('/', function(req, res){
+	console.log(req.body)
+	var mysql = req.app.get('mysql');
+	var sql = "insert into card (name, rarity, description, mana_cost, card_type) values (?, ?, ?, ?)";
+	var inserts = [req.body.name, req.body.rarity, req.body.description, req.body.mana_cost, req.body.card_type];
+	sql = mysql.pool.query(sql,inserts,function(error,results,fields){
+		if(error){
+			console.log(JSON.stringify(error))
+			res.write(JSON.stringify(error));
+			res.end();
+		}else{
+			res.redirect('/card');
+		}
+
+	});
+});
+	return router;
 }();
+

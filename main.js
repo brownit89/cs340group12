@@ -2,7 +2,6 @@
  *     Uses express, dbcon for database connection, body parser to parse form data
  *         handlebars for HTML templates
  *         */
-
 var express = require('express');
 var mysql = require('./dbcon.js');
 var bodyParser = require('body-parser');
@@ -17,9 +16,9 @@ app.set('view engine', 'handlebars');
 app.set('port', process.argv[2]);
 app.set('mysql', mysql);
 app.use('/cards', require('./cards.js'));
-app.use('/minion', require('./minion.js'));
-app.use('/spell', require('./spell.js'));
-app.use('/weapon',require('./weapon.js'));
+app.use('/minions', require('./minions.js'));
+app.use('/spells', require('./spells.js'));
+app.use('/weapons',require('./weapons.js'));
 app.use('/', express.static('public'));
 
 app.use(function(req,res){
@@ -36,3 +35,4 @@ app.use(function(err, req, res, next){
 app.listen(app.get('port'), function(){
   console.log('Express started on http://localhost:' + app.get('port') + '; press Ctrl-C to terminate.');
 });
+

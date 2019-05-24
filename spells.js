@@ -44,7 +44,7 @@ module.exports = function(){
 			res.render('serverSpell', context);
 		}
 		}
-		var queryStr = mysql.poo.query(queryStr, spellID, handleRenderingOfOneSpell);
+		var queryStr = mysql.pool.query(queryStr, spellID, handleRenderingOfOneSpell);
 	}
 
 	router.get('/', serveSpells);
@@ -52,3 +52,4 @@ module.exports = function(){
 	return router;
 
 }();
+

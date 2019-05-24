@@ -44,7 +44,7 @@ module.exports = function(){
 			res.render('serverMinion', context);
 		}
 		}
-		var queryStr = mysql.poo.query(queryStr, minionID, handleRenderingOfOneMinion);
+		var queryStr = mysql.pool.query(queryStr, minionID, handleRenderingOfOneMinion);
 	}
 
 	router.get('/', serveMinions);
@@ -52,3 +52,4 @@ module.exports = function(){
 	return router;
 
 }();
+

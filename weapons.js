@@ -44,7 +44,7 @@ module.exports = function(){
 			res.render('serverWeapon', context);
 		}
 		}
-		var queryStr = mysql.poo.query(queryStr, weaponID, handleRenderingOfOneWeapon);
+		var queryStr = mysql.pool.query(queryStr, weaponID, handleRenderingOfOneWeapon);
 	}
 
 	router.get('/', serveWeapons);
