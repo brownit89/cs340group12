@@ -35,11 +35,11 @@ insert into card_weapon (card_id, weapon_id) values (2, 1);
 drop table if exists weapon; 
 create table weapon (
 	weapon_id int not null auto_increment,
-	ap int not null,
+	attack_power int not null,
 	durability int not null,
 	primary key (weapon_id)
 );
-insert into weapon (ap, durability) values (2, 8);
+insert into weapon (attack_power, durability) values (2, 8);
 
 drop table if exists weapon_mechanics; 
 create table weapon_mechanics (
@@ -65,12 +65,12 @@ insert into card_minion (card_id, minion_id) values (1, 1);
 drop table if exists minion; 
 create table minion (
 	minion_id int not null auto_increment,
-	ap int not null,
-	hp int not null,
+	attack_power int not null,
+	health_power int not null,
 	primary key (minion_id)
 );
 
-insert into minion (ap, hp) values (4, 4);
+insert into minion (attack_power, health_power) values (4, 4);
 
 drop table if exists minion_mechanics; 
 create table minion_mechanics (

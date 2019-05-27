@@ -15,10 +15,10 @@ app.use('/static', express.static('public'));
 app.set('view engine', 'handlebars');
 app.set('port', process.argv[2]);
 app.set('mysql', mysql);
-app.use('/cards', require('./cards.js'));
-app.use('/minions', require('./minions.js'));
-app.use('/spells', require('./spells.js'));
-app.use('/weapons',require('./weapons.js'));
+app.use('/card', require('./card.js'));
+app.use('/minion', require('./minion.js'));
+app.use('/spell', require('./spell.js'));
+app.use('/weapon',require('./weapon.js'));
 app.use('/', express.static('public'));
 
 app.use(function(req,res){
