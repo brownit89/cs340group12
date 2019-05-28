@@ -118,8 +118,8 @@ router.get('/:id', function(req, res){
 router.post('/', function(req, res){
 	console.log(req.body)
 	var mysql = req.app.get('mysql');
-	var sql = "insert into card (name, rarity, description, mana_cost, card_type) values (?, ?, ?, ?)";
-	var inserts = [req.body.name, req.body.rarity, req.body.description, req.body.mana_cost, req.body.card_type];
+	var sql = "insert into card (card_name, rarity, description, mana_cost, card_type) values (?, ?, ?, ?, ?)";
+	var inserts = [req.body.card_name, req.body.rarity, req.body.description, req.body.mana_cost, req.body.card_type];
 	sql = mysql.pool.query(sql,inserts,function(error,results,fields){
 		if(error){
 			console.log(JSON.stringify(error))
