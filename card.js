@@ -3,7 +3,7 @@ module.exports = function(){
 	var router = express.Router();
 
 	function getCards(res, mysql, context, complete){
-        mysql.pool.query("SELECT * from card;", function(error, results, fields){
+        mysql.pool.query("SELECT * from card", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
@@ -95,7 +95,7 @@ router.get('/', function(req, res){
 	getCards(res, mysql, context, complete);
 	function complete(){
 		callbackCount++;
-		if(callbackCount >= 2){
+		if(callbackCount >= 1){
 			res.render('card', context);
 		}
 	}
