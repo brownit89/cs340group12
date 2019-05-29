@@ -1,9 +1,43 @@
-<table>
-{{#each weapon}}
-	<tr>
-		<td>{{weapon_id}}</td>
-		<td>{{attack_power}}</td>
-		<td>{{durability}}</td>
-	</tr>
+<html>
+{{#each foo}}
+{{this}}
 {{/each}}
+<h3>Add New Weapon:</h3>
+<form id="addweapon" action="/weapon" method="post">
+	Name: <input type="text" name="card_name"><br>
+	Rarity: <input type="text" name="rarity"><br>
+	Description: <input type="text" name="description"><br>
+	Mana Cost: <input type="number" name="mana_cost"><br>
+	Card Type: <input type="text" name="card_type"><br>
+	Attack Power: <input type = "number" name="attack_power"><br>
+	Durability: <input type = "number" name="durability"><br>
+	<input type="submit" value="Submit">
+</form>
+<br/>
+
+<h3>Current Cards:</h3>
+<table>
+	<thead>
+		<th>Name:</th>
+		<th>Rarity</th>
+		<th>Description</th>
+		<th>Mana Cost</th>
+		<th>Card Type</th>
+		<th>Attack Power</th>
+		<th>Durability</th>
+	</thead>
+	<tbody>
+		{{#each card}}
+		<tr>
+			<td>{{card_name}}</td>
+			<td>{{rarity}}</td>
+			<td>{{description}}</td>
+			<td>{{mana_cost}}</td>
+			<td>{{card_type}}</td>
+			<td>{{attack_power}}</td>
+			<td>{{durability}}</td>
+		</tr>
+		{{/each}}
+	</tbody>
 </table>
+</html>

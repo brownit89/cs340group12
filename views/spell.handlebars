@@ -1,8 +1,40 @@
-<table>
-{{#each spell}}
-	<tr>
-		<td>{{spell_id}}</td>
-		<td>{{spell_type}}</td>
-	</tr>
+<html>
+{{#each foo}}
+{{this}}
 {{/each}}
+<h3>Add New Spell:</h3>
+<form id="addspell" action="/spell" method="post">
+	Name: <input type="text" name="card_name"><br>
+	Rarity: <input type="text" name="rarity"><br>
+	Description: <input type="text" name="description"><br>
+	Mana Cost: <input type="number" name="mana_cost"><br>
+	Card Type: <input type="text" name="card_type"><br>
+	Spell Type: <input type="text" name="spell_type"><br>
+	<input type="submit" value="Submit">
+</form>
+<br/>
+
+<h3>Current Cards:</h3>
+<table>
+	<thead>
+		<th>Name:</th>
+		<th>Rarity</th>
+		<th>Description</th>
+		<th>Mana Cost</th>
+		<th>Card Type</th>
+		<th>Spell Type</th>
+	</thead>
+	<tbody>
+		{{#each card}}
+		<tr>
+			<td>{{card_name}}</td>
+			<td>{{rarity}}</td>
+			<td>{{description}}</td>
+			<td>{{mana_cost}}</td>
+			<td>{{card_type}}</td>
+			<td>{{spell_type}}</td>
+		</tr>
+		{{/each}}
+	</tbody>
 </table>
+</html>
