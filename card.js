@@ -149,7 +149,6 @@ router.post('/', function(req, res){
 	});
 });
 
-<<<<<<< HEAD
 router.put('/:id', function(req, res){
 	var mysql = req.app.get('mysql');
 	console.log(req.body)
@@ -167,8 +166,6 @@ router.put('/:id', function(req, res){
 		}
 	});
 });
-=======
->>>>>>> 7f04336b07ba3844e6bc25b14ee62e8e99137f92
 
 router.delete('/:id', function(req, res){
 	var mysql = req.app.get('mysql');
