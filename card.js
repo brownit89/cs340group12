@@ -64,6 +64,20 @@ module.exports = function(){
 		});
 }
 
+	function getMinion(res, mysql, context, id, complete){
+		var sql = mysql.pool.query("select * from minion where minion_id = ?");
+		var inserts = [id];
+		mysql.pool.query(sql, inserts, function(error, results, fields){
+	if(error){
+		res.write(JSON.stringify(error));
+		res.end();
+	}
+	context.minion = results[0];
+	complete();
+
+	});
+}
+
 	function getMinionMechanics(res, mysql, context, complete){
 		mysql.pool.query("select * from card inner join card_minion on card.card_id = card_minion.card_id inner join minion on card_minion.minion_id = minion.minion_id inner join minion_mechanics on minion.minion_id = minion_mechanics.minion_id inner join mechanics on minion_mechanics.mech_id = mechanics.mech_id;", function(error, results, fields){
 	if(error){
@@ -106,7 +120,7 @@ router.get('/:id', function(req, res){
 	console.log('update function is being called');
 	callbackCount = 0;
 	var context = {};
-	context.jsscripts = ["selectedcard.js", "updatecard.js"];
+	context.jsscripts = ["selectedCard.js", "updateCard.js"];
 	var mysql = req.app.get('mysql');
 	getCard(res, mysql, context, req.params.id, complete);
 	function complete(){
@@ -135,6 +149,7 @@ router.post('/', function(req, res){
 	});
 });
 
+<<<<<<< HEAD
 router.put('/:id', function(req, res){
 	var mysql = req.app.get('mysql');
 	console.log(req.body)
@@ -152,12 +167,48 @@ router.put('/:id', function(req, res){
 		}
 	});
 });
+=======
+>>>>>>> 7f04336b07ba3844e6bc25b14ee62e8e99137f92
 
 router.delete('/:id', function(req, res){
 	var mysql = req.app.get('mysql');
 	var sql = "delete from card where card_id = ?";
 	var inserts = [req.params.id];
 	sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+		if(error){
+		console.log(error)
+		res.write(JSON.stringify(error));
+		res.status(400);
+		res.end();
+	}else{
+		res.status(202).end();
+	}
+	})
+})
+
+router.post('/', function(req, res){
+	console.log(req.body)
+	var mysql = req.app.get('mysql');
+	var sql = "insert into card (card_name, rarity, description, mana_cost, card_type) values (?, ?, ?, ?, ?);";
+	var inserts = [req.body.card_name, req.body.rarity, req.body.description, req.body.mana_cost, req.body.card_type];
+	sql = mysql.pool.query(sql,inserts,function(error,results,fields){
+		if(error){
+			console.log(JSON.stringify(error))
+			res.write(JSON.stringify(error));
+			res.end();
+		}else{
+			res.redirect('/card');
+		}
+
+	});
+});
+
+
+router.delete('/:id', function(req, res){
+	var mysql = req.app.get('mysql');
+	var cardSql = "delete from card where card_id = ?";
+	var cardInsert = [req.params.card_id];
+	cardSql = mysql.pool.query(cardSql, cardInsert, function(error, results, fields){
 		if(error){
 		console.log(error)
 		res.write(JSON.stringify(error));

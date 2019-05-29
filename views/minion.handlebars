@@ -1,9 +1,47 @@
-<table>
-{{#each minion}}
-	<tr>
-		<td>{{minion_id}}</td>
-		<td>{{attack_power}}</td>
-		<td>{{health_power}}</td>
-	</tr>
+<html>
+{{#each foo}}
+{{this}}
 {{/each}}
+<h3>Add New Minion:</h3>
+<form id="addminion" action="/minion" method="post">
+	Name: <input type="text" name="card_name"><br>
+	Rarity: <input type="text" name="rarity"><br>
+	Description: <input type="text" name="description"><br>
+	Mana Cost: <input type="number" name="mana_cost"><br>
+	Card Type: <input type="text" name="card_type"><br>
+	Attack Power: <input type = "number" name="attack_power"><br>
+	Health Power: <input type = "number" name="health_power"><br>
+	<input type="submit" value="Submit">
+</form>
+<br/>
+
+<h3>Current Minions:</h3>
+<table>
+	<thead>
+		<th>Name:</th>
+		<th>Rarity</th>
+		<th>Description</th>
+		<th>Mana Cost</th>
+		<th>Card Type</th>
+		<th>Attack Power</th>
+		<th>Health Power</th>
+	</thead>
+	<tbody>
+		{{#each card}}
+		<tr>
+			<td>{{card_name}}</td>
+			<td>{{rarity}}</td>
+			<td>{{description}}</td>
+			<td>{{mana_cost}}</td>
+			<td>{{card_type}}</td>
+		</tr>
+		{{/each}}
+		{{#each minion}}
+		<tr>
+			<td>{{minion.attack_power}}</td>
+			<td>{{minion.health_power}}</td>
+		</tr>
+		{{/each}}
+	</tbody>
 </table>
+</html>
