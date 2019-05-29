@@ -1,0 +1,11 @@
+<html>
+<h1>Update {{card.card_name}}</h1>
+<form id="update-card" action="/people" method="post">
+	Name: <input type="text" name="card_name" value="{{card.card_name}}"><br>
+	Rarity: <input type="text" name="rarity" value="{{card.rarity}}"><br>
+	Description: <input type="text" name="descripton" value="{{card.description}}"><br>
+	Mana Cost: <input type="number" name="mana_cost" value="{{card.mana_cost}}"><br>
+	Card Type: <input type="text" name="card_type" value="{{card.card_type}}"><br>
+</form>
+<button onclick="updateCard({{card.id}})">Update</button>
+</html>

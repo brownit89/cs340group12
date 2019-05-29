@@ -50,17 +50,18 @@ module.exports = function(){
 }
 
 	function getCard(res, mysql, context, id, complete){
-		var sql = mysql.pool.query("select * from card where card_id = ?");
+		console.log('get Card is being called');
+		var sql = "select card_id as id, card_name, rarity, description, mana_cost, card_type from card where card_id = ?";
 		var inserts = [id];
 		mysql.pool.query(sql, inserts, function(error, results, fields){
-	if(error){
-		res.write(JSON.stringify(error));
-		res.end();
-	}
-	context.card = results[0];
-	complete();
+			if(error){
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+			context.card = results[0];
+			complete();
 
-	});
+		});
 }
 
 	function getMinionMechanics(res, mysql, context, complete){
@@ -102,6 +103,7 @@ router.get('/', function(req, res){
 });
 
 router.get('/:id', function(req, res){
+	console.log('update function is being called');
 	callbackCount = 0;
 	var context = {};
 	context.jsscripts = ["selectedcard.js", "updatecard.js"];
@@ -109,7 +111,8 @@ router.get('/:id', function(req, res){
 	getCard(res, mysql, context, req.params.id, complete);
 	function complete(){
 		callbackCount++;
-		if(callbackCount >= 2){
+		if(callbackCount >= 1){
+			console.log('its trying to render');
 			res.render('update-card',context);
 		}
 	}
@@ -132,6 +135,24 @@ router.post('/', function(req, res){
 	});
 });
 
+router.put('/:id', function(req, res){
+	var mysql = req.app.get('mysql');
+	console.log(req.body)
+	console.log(req.params.id)
+	var sql = "UPDATE card SET card_name=?, rarity=?, description=?, mana_cost=?, card_type=? WHERE card_id=?";
+	var inserts = [req.body.card_name, req.body.rarity, req.body.description, req.body.mana_cost, req.body.card_type, req.params.id];
+	sql = mysql.pool.query(sql,inserts,function(error, results, fields){
+		if(error){
+			console.log(error)
+			res.write(JSON.stringify(error));
+			res.end();
+		}else{
+			res.status(200);
+			res.end();
+		}
+	});
+});
+
 router.delete('/:id', function(req, res){
 	var mysql = req.app.get('mysql');
 	var sql = "delete from card where card_id = ?";
@@ -149,4 +170,5 @@ router.delete('/:id', function(req, res){
 })
 	return router;
 }();
+
 
