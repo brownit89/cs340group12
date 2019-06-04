@@ -20,6 +20,8 @@ app.use('/minion', require('./minion.js'));
 app.use('/spell', require('./spell.js'));
 app.use('/weapon',require('./weapon.js'));
 app.use('/readCards',require('./readCards.js'));
+app.use('/updateCard',require('./updateCard.js'));
+app.use('/deleteCard',require('./deleteCard.js'));
 app.use('/', express.static('public'));
 
 app.use(function(req,res){
