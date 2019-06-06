@@ -110,7 +110,7 @@ router.get('/:id', function(req, res){
 	getCard(res, mysql, context, req.params.id, complete);
 	function complete(){
 		callbackCount++;
-		if(callbackCount >= 2){
+		if(callbackCount >= 1){
 			res.render('update-card',context);
 		}
 	}
@@ -133,7 +133,7 @@ router.delete('/:id', function(req, res){
 	}
 	})
 })
-/*
+
 router.post('/', function(req, res){
 	console.log(req.body)
 	var mysql = req.app.get('mysql');
@@ -150,7 +150,7 @@ router.post('/', function(req, res){
 
 	});
 });
-*/
+
 
 router.delete('/:id', function(req, res){
 	var mysql = req.app.get('mysql');
