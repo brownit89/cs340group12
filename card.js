@@ -3,7 +3,7 @@ module.exports = function(){
 	var router = express.Router();
 
 	function getCards(res, mysql, context, complete){
-        mysql.pool.query("SELECT * from card", function(error, results, fields){
+        mysql.pool.query("SELECT card_id as id, card_name, rarity, description, mana_cost, card_type from card", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
@@ -108,6 +108,7 @@ router.get('/', function(req, res){
 	context.jsscripts = ["deletecard.js"];
 	var mysql = req.app.get('mysql');
 	getCards(res, mysql, context, complete);
+	console.log('card.js is succesful');
 	function complete(){
 		callbackCount++;
 		if(callbackCount >= 1){
@@ -117,16 +118,15 @@ router.get('/', function(req, res){
 });
 
 router.get('/:id', function(req, res){
-	console.log('update function is being called');
 	callbackCount = 0;
 	var context = {};
 	context.jsscripts = ["selectedCard.js", "updateCard.js"];
 	var mysql = req.app.get('mysql');
+	console.log(req.params.id);
 	getCard(res, mysql, context, req.params.id, complete);
 	function complete(){
 		callbackCount++;
 		if(callbackCount >= 1){
-			console.log('its trying to render');
 			res.render('update-card',context);
 		}
 	}
@@ -150,9 +150,12 @@ router.post('/', function(req, res){
 });
 
 router.put('/:id', function(req, res){
+	console.log("It's working (router.put)");
 	var mysql = req.app.get('mysql');
 	console.log(req.body)
+	console.log("It's working (router.put)");
 	console.log(req.params.id)
+	console.log("It's working (router.put)");
 	var sql = "UPDATE card SET card_name=?, rarity=?, description=?, mana_cost=?, card_type=? WHERE card_id=?";
 	var inserts = [req.body.card_name, req.body.rarity, req.body.description, req.body.mana_cost, req.body.card_type, req.params.id];
 	sql = mysql.pool.query(sql,inserts,function(error, results, fields){

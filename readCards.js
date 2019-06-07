@@ -1,7 +1,6 @@
 module.exports = function(){
 	var express = require('express');
 	var router = express.Router();
-
 	function getCards(res, mysql, context, complete){
         mysql.pool.query("SELECT * from card", function(error, results, fields){
             if(error){
@@ -89,6 +88,7 @@ module.exports = function(){
 }
 
 router.get('/', function(req, res){
+	console.log('Working');
 	var callbackCount = 0;
 	var context = {};
 	context.jsscripts = ["deleteCard.js"];
