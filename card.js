@@ -206,9 +206,9 @@ router.post('/', function(req, res){
 
 router.delete('/:id', function(req, res){
 	var mysql = req.app.get('mysql');
-	var cardSql = "delete from card where card_id = ?";
-	var cardInsert = [req.params.card_id];
-	cardSql = mysql.pool.query(cardSql, cardInsert, function(error, results, fields){
+	var sql = "delete from card where card_id = ?";
+	var inserts = [req.params.id];
+	sql = mysql.pool.query(sql, inserts, function(error, results, fields){
 		if(error){
 		console.log(error)
 		res.write(JSON.stringify(error));
