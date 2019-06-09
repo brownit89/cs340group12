@@ -49,6 +49,21 @@ module.exports = function(){
 	});
 }
 
+	function getCardsWithNameLike(req,res,mysql,context,complete){
+		var query = "select card_id, card_name, rarity, description, mana_cost, card_type from card where card_name= " + mysql.pool.escape(req.params.s);
+		console.log(query)
+
+		mysql.pool.query(query, function(error, results, fields){
+			if(error){
+				console.log(error)
+				res.write(JSON.stringify(error));
+				res.end();
+			}
+			context.card = results;
+			complete();
+		});
+}
+
 	function getCard(res, mysql, context, id, complete){
 		console.log('get Card is being called');
 		var sql = "select card_id as id, card_name, rarity, description, mana_cost, card_type from card where card_id = ?";
@@ -62,6 +77,20 @@ module.exports = function(){
 			complete();
 
 		});
+}
+
+ function getCardsByManaCost(req, res, mysql, context, complete){
+      var query = "SELECT card_id, card_name, rarity, description, mana_cost, card_type from card where mana_cost = ?";
+      console.log(req.params)
+      var inserts = [req.params.mana_cost]
+      mysql.pool.query(query, inserts, function(error, results, fields){
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.card = results;
+            complete();
+        });
 }
 
 	function getMinion(res, mysql, context, id, complete){
@@ -102,10 +131,11 @@ module.exports = function(){
 	});
 }
 
+//displays all cards, requires web based js with ajax
 router.get('/', function(req, res){
 	var callbackCount = 0;
 	var context = {};
-	context.jsscripts = ["deletecard.js"];
+	context.jsscripts = ["deletecard.js", "filtercards.js", "searchcards.js"];
 	var mysql = req.app.get('mysql');
 	getCards(res, mysql, context, complete);
 	console.log('card.js is succesful');
@@ -117,12 +147,44 @@ router.get('/', function(req, res){
 	}
 });
 
+   /*Display all cards from a given mana cost. Requires web based javascript to delete users with AJAX*/
+    router.get('/filter/:mana_cost', function(req, res){
+        var callbackCount = 0;
+        var context = {};
+        context.jsscripts = ["deletecard.js","filtercards.js","searchcards.js"];
+        var mysql = req.app.get('mysql');
+        getCardsByManaCost(req,res, mysql, context, complete);
+        function complete(){
+            callbackCount++;
+            if(callbackCount >= 1){
+                res.render('card', context);
+            }
+
+        }
+});
+
+/*Display all cards whose name starts with a given string. Requires web based javascript to delete users with AJAX */
+    router.get('/search/:s', function(req, res){
+        var callbackCount = 0;
+        var context = {};
+        context.jsscripts = ["deletecard.js","filtercards.js","searchcards.js"];
+        var mysql = req.app.get('mysql');
+        getCardsWithNameLike(req, res, mysql, context, complete);
+        function complete(){
+            callbackCount++;
+            if(callbackCount >= 1){
+                res.render('card', context);
+            }
+        }
+});
+
+//display one card for purpose of updating cards
 router.get('/:id', function(req, res){
 	callbackCount = 0;
 	var context = {};
 	context.jsscripts = ["selectedCard.js", "updateCard.js"];
 	var mysql = req.app.get('mysql');
-	console.log(req.params.id);
+	console.log(req.params.id)
 	getCard(res, mysql, context, req.params.id, complete);
 	function complete(){
 		callbackCount++;
@@ -132,6 +194,7 @@ router.get('/:id', function(req, res){
 	}
 });
 
+//adds a card redirecting to card page after adding
 router.post('/', function(req, res){
 	console.log(req.body)
 	var mysql = req.app.get('mysql');
@@ -149,6 +212,7 @@ router.post('/', function(req, res){
 	});
 });
 
+//uri that updates data is sent to in order to update a card
 router.put('/:id', function(req, res){
 	console.log("It's working (router.put)");
 	var mysql = req.app.get('mysql');
@@ -170,6 +234,7 @@ router.put('/:id', function(req, res){
 	});
 });
 
+//route to delete a card, returns 202 upon success.  handled by ajax
 router.delete('/:id', function(req, res){
 	var mysql = req.app.get('mysql');
 	var sql = "delete from card where card_id = ?";
@@ -186,6 +251,7 @@ router.delete('/:id', function(req, res){
 	})
 })
 
+/*
 router.post('/', function(req, res){
 	console.log(req.body)
 	var mysql = req.app.get('mysql');
@@ -202,7 +268,7 @@ router.post('/', function(req, res){
 
 	});
 });
-
+*/
 
 router.delete('/:id', function(req, res){
 	var mysql = req.app.get('mysql');

@@ -11,7 +11,8 @@ create table card (
 	description varchar(255),
 	mana_cost int not null,
 	card_type varchar(255),
-	primary key (card_id)
+	primary key (card_id),
+	unique (mana_cost)
 );
 
 insert into card(card_name, mana_cost, rarity, description, card_type) values ('Abomination', 5, 'Rare', 'Deal 2 damage to all characters.', 'Neutral');

@@ -13,6 +13,24 @@
 </form>
 <br/>
 
+<form id='filter_cards' action='' method=''>
+<!--- this form does not submit directly, the button handles all the interaction with backend -->
+    <label> Filter cards by mana cost: </label>
+    <select id='mana_cost_filter' name="mana_cost"> 
+        {{#each card}}
+        <option value="{{mana_cost}}">{{mana_cost}}</option>
+        {{/each}}
+    </select><br>
+    <input type="button" value="Filter" onclick="filterCardsByManaCost()">
+</form>
+
+<form id='search_cards' action='' method=''>
+<!--- this form does not submit directly, the button handles all the interaction with backend -->
+    <label> Search cards by name:</label>
+    <input id='card_name_search_string' type='text' name='card_name_search_string' value=''>
+    <input type="button" value="Search" onclick="searchCardsByName()">
+</form>
+
 <h3>Current Cards:</h3>
 <table>
 	<thead>
