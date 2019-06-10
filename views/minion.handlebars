@@ -27,19 +27,15 @@
 		<th>Health Power</th>
 	</thead>
 	<tbody>
-		{{#each card}}
+		{{#each minion}}
 		<tr>
 			<td>{{card_name}}</td>
 			<td>{{rarity}}</td>
 			<td>{{description}}</td>
 			<td>{{mana_cost}}</td>
 			<td>{{card_type}}</td>
-		</tr>
-		{{/each}}
-		{{#each minion}}
-		<tr>
-			<td>{{minion.attack_power}}</td>
-			<td>{{minion.health_power}}</td>
+			<td>{{attack_power}}</td>
+			<td>{{health_power}}</td>
 		</tr>
 		{{/each}}
 	</tbody>

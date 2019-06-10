@@ -12,7 +12,7 @@ create table card (
 	mana_cost int not null,
 	card_type varchar(255),
 	primary key (card_id),
-	unique (mana_cost)
+	unique (card_name)
 );
 
 insert into card(card_name, mana_cost, rarity, description, card_type) values ('Abomination', 5, 'Rare', 'Deal 2 damage to all characters.', 'Neutral');
@@ -31,7 +31,7 @@ create table card_weapon (
 	constraint fk_card_weapon_weapon foreign key (weapon_id) 
 	references weapon(weapon_id)
 );
-insert into card_weapon (card_id, weapon_id) values (2, 1);
+insert into card_weapon (card_id, weapon_id) values (3, 1);
 
 drop table if exists weapon; 
 create table weapon (

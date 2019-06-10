@@ -2,6 +2,32 @@ module.exports = function(){
 	var express = require('express');
 	var router = express.Router();
 	
+	function getWeapons(res, mysql, context, complete){
+		mysql.pool.query("select * from card inner join card_weapon on card.card_id = card_weapon.card_id inner join weapon on card_weapon.weapon_id = weapon.weapon_id", function(error, results, fields){
+	if(error){
+		res.write(JSON.stringify(error));
+		res.end();
+	}
+	context.weapon = results;
+	complete();
+
+	});
+}
+router.get('/', function(req, res){
+	var callbackCount = 0;
+	var context = {};
+	context.jsscripts = ["deleteMinion.js"];
+	var mysql = req.app.get('mysql');
+	getWeapons(res, mysql, context, complete);
+	function complete(){
+		callbackCount++;
+		if(callbackCount >= 1){
+			res.render('weapon', context);
+		}
+	}
+});
+/*
+router.get('/', function(req, res){
 	function serveWeapons(req,res){
 		console.log("You asked me for some weapons?")
 		var query = 'select weapon_id, attack_power, durability from weapon';
@@ -49,6 +75,7 @@ module.exports = function(){
 
 	router.get('/', serveWeapons);
 	router.get('/:weaponID', serveOneWeapon);
+	*/
 	return router;
 
 }();
