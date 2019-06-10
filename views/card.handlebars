@@ -2,6 +2,14 @@
 {{#each foo}}
 {{this}}
 {{/each}}
+<div class="topnav">
+	<a href ="/">Main</a>
+	<a href ="/card">Cards</a>
+	<a href="/minion">Minions</a>
+	<a href="/weapon">Weapons</a>
+	<a href="/spell">Spells</a>
+</div>
+
 <h3>Add New Card:</h3>
 <form id="addcard" action="/card" method="post">
 	Name: <input type="text" name="card_name"><br>
