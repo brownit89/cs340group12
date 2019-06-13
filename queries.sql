@@ -1,13 +1,10 @@
-select * from card;
-select * from minion;
-select * from spell;
-select * from weapon;
-update card
-		set rarity = "rare"
-		where name = "Shield Maiden";
-delete from card where name = "Dr. Boom";
-insert into card (name, rarity, description, mana_cost, card_type)
-values (nameInput, rarityInput, descriptionInput, mana_costInput, card_typeInput);
+select card_id, card_name, rarity, description, mana_cost, card_type from card;
+select minion_id, attack_power, health_power from minion;
+select spell_id, spell_typeInput from spell;
+select weapon_id, attack_power, durability from weapon;
+UPDATE card SET card_name=?, rarity=?, description=?, mana_cost=?, card_type=? WHERE card_id=?;
+delete from card where card_id = ?;
+insert into card (card_name, rarity, description, mana_cost, card_type) values (?, ?, ?, ?, ?);
 insert into minion (attack_power, health_power)
 values (attack_powerInput, health_powerInput);
 insert into weapon (attack_power, durability)
@@ -21,7 +18,6 @@ values (nameInput);
 select * from card
 inner join card_minion on card.card_id = card_minion.card_id
 inner join minion on card_minion.minion_id = minion.minion_id;
-
 
 -- shows all weapon cards
 select * from card
